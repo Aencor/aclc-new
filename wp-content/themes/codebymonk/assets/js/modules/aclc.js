@@ -4,6 +4,7 @@ function qa(s, r) { return Array.from((r || document).querySelectorAll(s)); }
 export default {
   init() {
     this.initBurger();
+    this.initLangSwitch();
     this.initHeroCanvas();
     this.initFilmModal();
     this.initReveal();
@@ -12,6 +13,25 @@ export default {
     this.initRegForm();
     this.initNewsletter();
     this.initCookies();
+  },
+
+  initLangSwitch() {
+    qa('.langsw button').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetLang = btn.dataset.lang;
+        const currentPath = window.location.pathname;
+        if (targetLang === 'es') {
+          if (!currentPath.startsWith('/es')) {
+            window.location.href = '/es/';
+          }
+        } else {
+          if (currentPath.startsWith('/es')) {
+            window.location.href = '/';
+          }
+        }
+      });
+    });
   },
 
   initBurger() {

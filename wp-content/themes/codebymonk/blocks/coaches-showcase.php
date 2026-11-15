@@ -90,5 +90,27 @@ if (empty($selected_coaches)) {
 				</div>
 			<?php endif; ?>
 		</div>
+
+		<?php 
+		$show_spanish_section = get_field('show_spanish_section');
+		if ($show_spanish_section === null || $show_spanish_section === true || is_page('coaches')): 
+			$es_title = get_field('spanish_section_title') ?: 'Coaching in Spanish';
+			$es_desc  = get_field('spanish_section_desc') ?: 'Raul Rivera leads the Spanish-speaking market. You can request your information and any follow-up in Spanish.';
+			$es_btn   = get_field('spanish_section_btn') ?: 'Register for information';
+			$es_url   = get_field('spanish_section_url') ?: home_url('/register/');
+		?>
+			<div class="card tint pad-lg split mt32" style="align-items:center">
+				<div class="hgroup" style="gap:16px;align-items:flex-start">
+					<div class="iconbox">
+						<svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-globe"/></svg>
+					</div>
+					<div>
+						<h3><?= esc_html($es_title); ?></h3>
+						<p class="sm mt8"><?= esc_html($es_desc); ?></p>
+					</div>
+				</div>
+				<a class="btn btn-primary" href="<?= esc_url($es_url); ?>"><?= esc_html($es_btn); ?></a>
+			</div>
+		<?php endif; ?>
 	</div>
 </section>

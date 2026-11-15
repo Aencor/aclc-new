@@ -41,32 +41,47 @@
 </defs>
 </svg>
 
+<?php
+$req_uri = $_SERVER['REQUEST_URI'] ?? '';
+$is_es = (strpos($req_uri, '/es/') !== false || $req_uri === '/es' || (defined('ICL_LANGUAGE_CODE') && ICL_LANGUAGE_CODE === 'es'));
+$current_lang = $is_es ? 'es' : 'en';
+
+$home_link     = $is_es ? home_url('/es/') : home_url('/');
+$programs_link = $is_es ? home_url('/es/programas/') : home_url('/programs/');
+$calendar_link = home_url('/calendar/');
+$coaching_link = $is_es ? home_url('/es/coaching/') : home_url('/coaching/');
+$clients_link  = home_url('/clients/');
+$coaches_link  = $is_es ? home_url('/es/coaches/') : home_url('/coaches/');
+$reading_link  = $is_es ? home_url('/es/lectura/') : home_url('/reading/');
+$register_link = $is_es ? home_url('/es/registro/') : home_url('/register/');
+
+$en_target_url = $is_es ? home_url('/') : '#';
+$es_target_url = !$is_es ? home_url('/es/') : '#';
+?>
+
 <header class="site">
 	<div class="wrap bar">
-		<a href="<?= esc_url(home_url('/')); ?>" class="hgroup">
+		<a href="<?= esc_url($home_link); ?>" class="hgroup">
 			<img class="logo" alt="Advanced Coaching & Leadership Center" src="<?= esc_url(get_template_directory_uri()); ?>/assets/img/logos/logo.png">
 		</a>
 
 		<nav class="main">
-			<a href="<?= esc_url(home_url('/programs/')); ?>" class="<?= is_page('programs') ? 'on' : ''; ?>">Programs</a>
-			<a href="<?= esc_url(home_url('/calendar/')); ?>" class="<?= is_page('calendar') ? 'on' : ''; ?>">Upcoming courses</a>
-			<a href="<?= esc_url(home_url('/coaching/')); ?>" class="<?= is_page('coaching') ? 'on' : ''; ?>">1-on-1 Coaching</a>
-			<a href="<?= esc_url(home_url('/clients/')); ?>" class="<?= is_page('clients') ? 'on' : ''; ?>">Clients</a>
-			<a href="<?= esc_url(home_url('/coaches/')); ?>" class="<?= is_page('coaches') ? 'on' : ''; ?>">Coaches</a>
-			<a href="<?= esc_url(home_url('/reading/')); ?>" class="<?= is_page('reading') ? 'on' : ''; ?>">Reading</a>
+			<a href="<?= esc_url($programs_link); ?>" class="<?= (is_page('programs') || is_page('programas')) ? 'on' : ''; ?>"><?= $is_es ? 'Programas' : 'Programs'; ?></a>
+			<a href="<?= esc_url($calendar_link); ?>" class="<?= is_page('calendar') ? 'on' : ''; ?>"><?= $is_es ? 'Próximos cursos' : 'Upcoming courses'; ?></a>
+			<a href="<?= esc_url($coaching_link); ?>" class="<?= is_page('coaching') ? 'on' : ''; ?>"><?= $is_es ? 'Coaching 1-a-1' : '1-on-1 Coaching'; ?></a>
+			<a href="<?= esc_url($clients_link); ?>" class="<?= is_page('clients') ? 'on' : ''; ?>"><?= $is_es ? 'Clientes' : 'Clients'; ?></a>
+			<a href="<?= esc_url($coaches_link); ?>" class="<?= is_page('coaches') ? 'on' : ''; ?>"><?= $is_es ? 'Coaches' : 'Coaches'; ?></a>
+			<a href="<?= esc_url($reading_link); ?>" class="<?= (is_page('reading') || is_page('lectura')) ? 'on' : ''; ?>"><?= $is_es ? 'Lecturas' : 'Reading'; ?></a>
 		</nav>
 
 		<div class="hgroup">
 			<div class="langsw">
-				<?php 
-				$current_lang = defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en';
-				?>
-				<button type="button" class="<?= $current_lang === 'en' ? 'on' : ''; ?>" data-lang="en">EN</button>
-				<button type="button" class="<?= $current_lang === 'es' ? 'on' : ''; ?>" data-lang="es">ES</button>
+				<button type="button" class="<?= $current_lang === 'en' ? 'on' : ''; ?>" data-lang="en" onclick="location.href='<?= esc_url($en_target_url); ?>'">EN</button>
+				<button type="button" class="<?= $current_lang === 'es' ? 'on' : ''; ?>" data-lang="es" onclick="location.href='<?= esc_url($es_target_url); ?>'">ES</button>
 			</div>
 
-			<a class="btn btn-primary btn-sm" href="<?= esc_url(home_url('/register/')); ?>">
-				Register for information
+			<a class="btn btn-primary btn-sm" href="<?= esc_url($register_link); ?>">
+				<?= $is_es ? 'Registro de información' : 'Register for information'; ?>
 			</a>
 
 			<button class="burger" id="burgerToggle" aria-label="Menu">

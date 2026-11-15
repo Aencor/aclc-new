@@ -101,6 +101,20 @@ $books = get_field('books') ?: [
 					</div>
 				</div>
 			<?php endforeach; ?>
+
+			<!-- Spanish Titles Card -->
+			<div class="card border border-transparent rounded-[10px] p-6 bg-[#F4F7FA] shadow-sm flex flex-col justify-between hover:border-aclc-navy transition-all">
+				<div>
+					<div class="font-mono text-xs uppercase tracking-wider text-[#5A6875] mb-2">In Spanish</div>
+					<h4 class="font-display font-semibold text-lg text-aclc-ink mb-2">Nine titles available</h4>
+					<p class="text-sm leading-relaxed text-[#4A5764] font-body mb-6">El Fuego Que Llevas Dentro, ¿Eres una marioneta?, Los Diez Pasos Hacia La Grandeza and six more.</p>
+				</div>
+				<div class="border-t border-aclc-line pt-4">
+					<a href="https://knowledgism.com/bookstore" target="_blank" rel="noopener" class="btn btn-ghost px-3.5 py-1.5 border border-aclc-line rounded-lg text-xs font-semibold hover:border-aclc-navy text-aclc-ink transition-colors w-full text-center">
+						See the Spanish catalogue
+					</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
