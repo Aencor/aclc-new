@@ -1,34 +1,31 @@
-import { gsap, ScrollTrigger } from './animations';
+function q(s, r) { return (r || document).querySelector(s); }
+function qa(s, r) { return Array.from((r || document).querySelectorAll(s)); }
 
 export default {
   init() {
-    this.initMobileMenu();
+    this.initBurger();
     this.initHeroCanvas();
-    this.initVideoModal();
-    this.initCalendarFilter();
-    this.initLeadForm();
+    this.initFilmModal();
+    this.initReveal();
+    this.initZones();
+    this.initCalendar();
+    this.initRegForm();
     this.initNewsletter();
-    this.initCookieBar();
-    this.initGsapAnimations();
+    this.initCookies();
   },
 
-  initMobileMenu() {
-    const burger = document.getElementById('siteBurger');
-    const menu = document.getElementById('mobileMenu');
-    if (!burger || !menu) return;
-
-    burger.addEventListener('click', () => {
-      const isHidden = menu.hasAttribute('hidden');
-      if (isHidden) {
-        menu.removeAttribute('hidden');
-      } else {
-        menu.setAttribute('hidden', '');
-      }
-    });
+  initBurger() {
+    const b = q('.burger');
+    const nav = q('nav.main');
+    if (b && nav) {
+      b.addEventListener('click', () => {
+        nav.classList.toggle('open');
+      });
+    }
   },
 
   initHeroCanvas() {
-    const cv = document.getElementById('heroCanvas');
+    const cv = q('#heroCanvas');
     if (!cv) return;
 
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -38,12 +35,12 @@ export default {
     let t = 0;
     const dots = [];
 
-    function resize() {
+    function size() {
       cv.width = cv.offsetWidth;
       cv.height = cv.offsetHeight;
     }
-    resize();
-    window.addEventListener('resize', resize);
+    size();
+    window.addEventListener('resize', size);
 
     for (let i = 0; i < 46; i++) {
       dots.push({
@@ -54,9 +51,9 @@ export default {
       });
     }
 
-    function render() {
+    function loop() {
       if (!cv.offsetWidth) {
-        requestAnimationFrame(render);
+        requestAnimationFrame(loop);
         return;
       }
       ctx.clearRect(0, 0, cv.width, cv.height);
@@ -84,228 +81,257 @@ export default {
         ctx.fill();
       });
 
-      requestAnimationFrame(render);
+      requestAnimationFrame(loop);
     }
-    render();
+    loop();
   },
 
-  initVideoModal() {
-    const playBtn = document.getElementById('playFilm');
-    const modal = document.getElementById('filmModal');
-    const closeBtn = document.getElementById('closeFilm');
-    if (!playBtn || !modal) return;
+  initFilmModal() {
+    const pf = q('#playFilm');
+    const fm = q('#filmModal');
+    const cf = q('#closeFilm');
 
-    playBtn.addEventListener('click', () => {
-      modal.removeAttribute('hidden');
+    if (pf && fm) {
+      pf.onclick = () => {
+        fm.hidden = false;
+        fm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      };
+      if (cf) {
+        cf.onclick = () => {
+          fm.hidden = true;
+        };
+      }
+    }
+  },
+
+  initReveal() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    qa('.g2>.card, .g3>.card, .g4>.card, .rowbox, .newsband, .ladder .st').forEach((el) => {
+      if (!el.classList.contains('rv')) el.classList.add('rv');
     });
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        modal.setAttribute('hidden', '');
-      });
+    const items = qa('.rv');
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach((el) => el.classList.add('in'));
+      return;
     }
 
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.setAttribute('hidden', '');
-      }
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) {
-        modal.setAttribute('hidden', '');
-      }
-    });
-  },
-
-  initCalendarFilter() {
-    const tabsContainer = document.getElementById('calTabs');
-    const list = document.getElementById('calList');
-    if (!tabsContainer || !list) return;
-
-    const tabs = tabsContainer.querySelectorAll('.cal-tab');
-    const rows = list.querySelectorAll('.cal-row');
-
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach((t) => {
-          t.classList.remove('on', 'bg-aclc-navy', 'text-white');
-          t.classList.add('bg-slate-100', 'text-[#4A5764]');
-        });
-
-        tab.classList.add('on', 'bg-aclc-navy', 'text-white');
-        tab.classList.remove('bg-slate-100', 'text-[#4A5764]');
-
-        const format = tab.getAttribute('data-format');
-        rows.forEach((row) => {
-          const rowFmt = row.getAttribute('data-ev-format');
-          if (format === 'All' || rowFmt === format) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      });
-    });
-  },
-
-  initLeadForm() {
-    const form = document.getElementById('aclcRegForm');
-    const doneState = document.getElementById('aclcRegDone');
-    const successMsg = document.getElementById('aclcRegSuccessMsg');
-    const resetBtn = document.getElementById('aclcRegResetBtn');
-    if (!form || !doneState) return;
-
-    // Interest chips
-    const interestBtns = form.querySelectorAll('.interest-btn');
-    const hiddenInterest = document.getElementById('hiddenInterest');
-
-    interestBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        interestBtns.forEach((b) => {
-          b.classList.remove('sel', 'bg-aclc-navy', 'text-white', 'border-aclc-navy');
-          b.classList.add('border-aclc-line', 'text-[#4A5764]');
-        });
-        btn.classList.add('sel', 'bg-aclc-navy', 'text-white', 'border-aclc-navy');
-        btn.classList.remove('border-aclc-line', 'text-[#4A5764]');
-        if (hiddenInterest) {
-          hiddenInterest.value = btn.getAttribute('data-value');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
         }
       });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+    items.forEach((el, i) => {
+      if (el.closest('.vhero') || el.getBoundingClientRect().top < window.innerHeight) {
+        el.classList.add('in');
+      } else {
+        el.style.transitionDelay = (Math.min(i, 6) * 70) + 'ms';
+        io.observe(el);
+      }
+    });
+  },
+
+  initZones() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    const zo = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        qa('i', e.target).forEach((seg, i) => {
+          seg.classList.add('zseg');
+          seg.style.animationDelay = (i * 90) + 'ms';
+        });
+        zo.unobserve(e.target);
+      });
+    }, { threshold: 0.3 });
+    qa('.zones').forEach((z) => zo.observe(z));
+  },
+
+  initCalendar() {
+    const tabs = q('#calTabs');
+    const list = q('#calList');
+    if (!tabs || !list) return;
+
+    let courses = [];
+    try {
+      const raw = tabs.getAttribute('data-events');
+      if (raw) courses = JSON.parse(raw);
+    } catch (e) {}
+
+    if (!courses.length) {
+      courses = [
+        { m: 'SEP', d: '5', t: 'Redefine Your Self-Worth', w: '5 & 6 September 2026', f: 'Online', p: null, c: 1 },
+        { m: 'SEP', d: '19', t: 'Vital Fundamentals', w: '19-26 September 2026', f: 'In person', p: '$3,997', c: 1 },
+        { m: 'NOV', d: '2', t: 'Life Enhancement Course', w: '2, 3, 4, 8 & 9 November 2026', f: 'Online', p: null, c: 1 },
+        { m: 'NOV', d: '14', t: 'Redefine Your Self-Worth', w: '14 & 15 November 2026', f: 'Online', p: null, c: 1 },
+        { m: 'DEC', d: '5', t: 'Vital Fundamentals', w: '5-12 December 2026', f: 'In person', p: '$3,997', c: 1 },
+        { m: 'JAN', d: 'TBC', t: 'Life Enhancement Course', w: 'Early 2027', f: 'Online', p: null, c: 0 },
+      ];
+    }
+
+    let f = 'All';
+    function drawCal() {
+      tabs.innerHTML = ['All', 'Online', 'In person']
+        .map((x) => `<button class="tab${x === f ? ' on' : ''}" data-f="${x}">${x}</button>`)
+        .join('');
+
+      qa('.tab', tabs).forEach((b) => {
+        b.onclick = () => {
+          f = b.dataset.f;
+          drawCal();
+        };
+      });
+
+      const rows = courses.filter((c) => f === 'All' || c.f === f);
+      list.innerHTML =
+        rows
+          .map((c) => {
+            const price = c.p
+              ? `<span class="price" style="font-size:16px">${c.p}</span>`
+              : `<span class="pending">price TBD</span>`;
+            const status = c.c ? '' : `<span class="pill" style="margin-left:8px">Date to be confirmed</span>`;
+            return (
+              `<div class="row"><div class="datebox"><div class="tiny">${c.m}</div><div class="d">${c.d}</div></div>` +
+              `<div class="grow"><div style="font-weight:600">${c.t}${status}</div>` +
+              `<div class="xs">${c.w} · ${c.f}${c.f === 'In person' ? ', Letoli Ranch' : ''}</div></div>` +
+              price +
+              `<a class="btn btn-ghost btn-sm" href="#register">Get details</a></div>`
+            );
+          })
+          .join('') || '<div class="row"><div class="grow"><p class="sm">No dates in this format yet.</p></div></div>';
+    }
+    drawCal();
+  },
+
+  initRegForm() {
+    const form = q('#regForm');
+    const done = q('#regDone');
+    if (!form || !done) return;
+
+    let interest = null;
+    let lang = 'English';
+
+    qa('#rInterest .choice').forEach((b) => {
+      b.onclick = () => {
+        qa('#rInterest .choice').forEach((x) => x.classList.remove('sel'));
+        b.classList.add('sel');
+        interest = b.dataset.v;
+      };
     });
 
-    // Language buttons
-    const langBtns = form.querySelectorAll('.lang-btn');
-    const hiddenLang = document.getElementById('hiddenLang');
+    qa('#rLang button').forEach((b) => {
+      b.onclick = () => {
+        qa('#rLang button').forEach((x) => x.classList.remove('sel'));
+        b.classList.add('sel');
+        lang = b.dataset.l;
+      };
+    });
 
-    langBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        langBtns.forEach((b) => {
-          b.classList.remove('bg-aclc-navy', 'text-white', 'border-aclc-navy');
-          b.classList.add('border-aclc-line', 'text-[#4A5764]');
-        });
-        btn.classList.add('bg-aclc-navy', 'text-white', 'border-aclc-navy');
-        btn.classList.remove('border-aclc-line', 'text-[#4A5764]');
-        if (hiddenLang) {
-          hiddenLang.value = btn.getAttribute('data-lang');
+    const go = q('#rGo');
+    if (go) {
+      go.onclick = () => {
+        const name = (q('#rName').value || '').trim();
+        const mail = (q('#rMail').value || '').trim();
+        if (!name) {
+          q('#rName').focus();
+          alert('Enter your first name to continue.');
+          return;
         }
-      });
-    });
+        if (mail.indexOf('@') < 1 || mail.indexOf('.') < 0) {
+          q('#rMail').focus();
+          alert('Enter a valid email address.');
+          return;
+        }
+        if (!interest) {
+          alert('Pick what you are interested in.');
+          return;
+        }
+        if (!q('#rOk').checked) {
+          alert('Please accept the Privacy Policy to continue.');
+          return;
+        }
+        const wantsCall = q('#rCall').checked;
+        q('#regTxt').textContent =
+          name +
+          ', we have sent the ' +
+          interest.toLowerCase() +
+          ' details to ' +
+          mail +
+          ' in ' +
+          lang +
+          '.' +
+          (wantsCall ? ' A coach will also contact you to arrange a call.' : '');
+        form.hidden = true;
+        done.hidden = false;
+      };
+    }
 
-    // Form submit
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const firstName = document.getElementById('regFirstName')?.value.trim();
-      const email = document.getElementById('regEmail')?.value.trim();
-      const interest = hiddenInterest?.value || 'the programme';
-      const lang = hiddenLang?.value || 'English';
-      const wantsCall = document.getElementById('regCall')?.checked;
-
-      if (!hiddenInterest?.value) {
-        alert('Please select which programme you are interested in.');
-        return;
-      }
-
-      form.setAttribute('hidden', '');
-      doneState.removeAttribute('hidden');
-
-      if (successMsg) {
-        successMsg.textContent = `${firstName}, we have sent the ${interest.toLowerCase()} details to ${email} in ${lang}.${wantsCall ? ' A coach will also contact you to arrange an introductory call.' : ''}`;
-      }
-    });
-
-    // Reset button
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        form.reset();
-        interestBtns.forEach((b) => {
-          b.classList.remove('sel', 'bg-aclc-navy', 'text-white', 'border-aclc-navy');
-          b.classList.add('border-aclc-line', 'text-[#4A5764]');
+    const reset = q('#rReset');
+    if (reset) {
+      reset.onclick = () => {
+        ['rName', 'rLast', 'rMail', 'rPhone'].forEach((id) => {
+          if (q('#' + id)) q('#' + id).value = '';
         });
-        if (hiddenInterest) hiddenInterest.value = '';
-        doneState.setAttribute('hidden', '');
-        form.removeAttribute('hidden');
-      });
+        if (q('#rOk')) q('#rOk').checked = false;
+        if (q('#rCall')) q('#rCall').checked = false;
+        qa('#rInterest .choice').forEach((x) => x.classList.remove('sel'));
+        interest = null;
+        done.hidden = true;
+        form.hidden = false;
+      };
     }
   },
 
   initNewsletter() {
-    const bands = document.querySelectorAll('.newsband');
-    bands.forEach((band) => {
-      const goBtn = band.querySelector('.nGo');
-      const mailInput = band.querySelector('.nMail');
-      const privacyCheck = band.querySelector('.nOk');
-      const form = band.querySelector('.newsForm');
-      const doneState = band.querySelector('.newsDone');
-      const txt = band.querySelector('.newsTxt');
-
-      if (!goBtn || !mailInput || !form || !doneState) return;
-
-      goBtn.addEventListener('click', () => {
-        const val = mailInput.value.trim();
-        if (!val || val.indexOf('@') < 1 || val.indexOf('.') < 0) {
-          alert('Please enter a valid email address.');
-          mailInput.focus();
+    qa('.newsband').forEach((band) => {
+      const go = q('.nGo', band);
+      if (!go) return;
+      go.onclick = () => {
+        const mail = q('.nMail', band);
+        const m = (mail.value || '').trim();
+        if (m.indexOf('@') < 1 || m.indexOf('.') < 0) {
+          mail.focus();
+          alert('Enter a valid email address.');
           return;
         }
-
-        if (privacyCheck && !privacyCheck.checked) {
+        if (!q('.nOk', band).checked) {
           alert('Please accept the Privacy Policy to subscribe.');
           return;
         }
-
-        if (txt) {
-          txt.textContent = `The Thought of the Week goes to ${val} every Monday.`;
-        }
-        form.setAttribute('hidden', '');
-        doneState.removeAttribute('hidden');
-      });
+        q('.newsTxt', band).textContent = 'The Thought of the Week goes to ' + m + ' every Monday.';
+        q('.newsForm', band).hidden = true;
+        q('.newsDone', band).hidden = false;
+      };
     });
   },
 
-  initCookieBar() {
-    const bar = document.getElementById('cookieBar');
+  initCookies() {
+    const bar = q('#cookieBar');
     if (!bar) return;
 
-    const consent = localStorage.getItem('aclc_cookie_consent');
+    const consent = localStorage.getItem('aclc_cookie_choice');
     if (!consent) {
-      bar.removeAttribute('hidden');
+      bar.hidden = false;
     }
 
-    const accept = document.getElementById('ckAccept');
-    const reject = document.getElementById('ckReject');
+    const acc = q('#ckAccept');
+    const rej = q('#ckReject');
 
-    if (accept) {
-      accept.addEventListener('click', () => {
-        localStorage.setItem('aclc_cookie_consent', 'all');
-        bar.setAttribute('hidden', '');
-      });
+    if (acc) {
+      acc.onclick = () => {
+        localStorage.setItem('aclc_cookie_choice', 'all');
+        bar.hidden = true;
+      };
     }
-
-    if (reject) {
-      reject.addEventListener('click', () => {
-        localStorage.setItem('aclc_cookie_consent', 'essential');
-        bar.setAttribute('hidden', '');
-      });
+    if (rej) {
+      rej.onclick = () => {
+        localStorage.setItem('aclc_cookie_choice', 'essential');
+        bar.hidden = true;
+      };
     }
-  },
-
-  initGsapAnimations() {
-    const cards = document.querySelectorAll('.card');
-    if (!cards.length || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-    cards.forEach((card) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-        },
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-      });
-    });
   },
 };

@@ -12,11 +12,11 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class('font-body text-aclc-ink bg-white antialiased'); ?>>
+<body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
 <!-- SVG Icon Sprite -->
-<svg width="0" height="0" style="position:absolute; display:none;" aria-hidden="true">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <defs>
 <g id="i-calendar"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></g>
 <g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.1 2.5-5.2 5.5-5.2s5.5 2.1 5.5 5.2"/><path d="M16.5 6.4a3 3 0 0 1 0 5.9M17.5 14.4c2 .6 3.5 2.4 3.5 4.6"/></g>
@@ -41,58 +41,38 @@
 </defs>
 </svg>
 
-<header class="site sticky top-0 z-50 bg-aclc-navy text-white border-b border-white/10 shadow-md">
-	<div class="wrap mx-auto max-w-[1160px] px-6 py-3.5 flex items-center justify-between gap-6">
-		
-		<!-- Brand Logo -->
-		<a href="<?= esc_url(home_url('/')); ?>" class="flex items-center gap-3">
-			<img class="h-7 w-auto object-contain" alt="Advanced Coaching & Leadership Center" src="<?= esc_url(get_template_directory_uri()); ?>/assets/img/logos/logo.png">
+<header class="site">
+	<div class="wrap bar">
+		<a href="<?= esc_url(home_url('/#home')); ?>" class="hgroup">
+			<img class="logo" alt="Advanced Coaching & Leadership Center" src="<?= esc_url(get_template_directory_uri()); ?>/assets/img/logos/logo.png">
 		</a>
 
-		<!-- Main Nav -->
-		<nav class="site-main-nav hidden md:flex items-center gap-6 text-sm font-medium">
-			<a href="<?= esc_url(home_url('/#programs')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">Programs</a>
-			<a href="<?= esc_url(home_url('/#calendar')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">Upcoming courses</a>
-			<a href="<?= esc_url(home_url('/#coaching')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">1-on-1 Coaching</a>
-			<a href="<?= esc_url(home_url('/#clients')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">Clients</a>
-			<a href="<?= esc_url(home_url('/#coaches')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">Coaches</a>
-			<a href="<?= esc_url(home_url('/#reading')); ?>" class="text-white/80 hover:text-white py-1 transition-colors">Reading</a>
+		<nav class="main">
+			<a href="<?= esc_url(home_url('/#programs')); ?>">Programs</a>
+			<a href="<?= esc_url(home_url('/#calendar')); ?>">Upcoming courses</a>
+			<a href="<?= esc_url(home_url('/#coaching')); ?>">1-on-1 Coaching</a>
+			<a href="<?= esc_url(home_url('/#clients')); ?>">Clients</a>
+			<a href="<?= esc_url(home_url('/#coaches')); ?>">Coaches</a>
+			<a href="<?= esc_url(home_url('/#reading')); ?>">Reading</a>
 		</nav>
 
-		<!-- Right Action & Language Switcher -->
-		<div class="flex items-center gap-4">
-			<!-- Language Switcher (Compatible with WPML) -->
-			<div class="langsw flex items-center bg-black/25 rounded-md p-0.5 text-xs font-mono">
+		<div class="hgroup">
+			<div class="langsw">
 				<?php 
 				$current_lang = defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en';
 				?>
-				<button type="button" class="lang-toggle-btn px-2 py-1 rounded <?= $current_lang === 'en' ? 'bg-aclc-fuego text-white font-bold' : 'text-white/70 hover:text-white'; ?>" data-lang="en">EN</button>
-				<button type="button" class="lang-toggle-btn px-2 py-1 rounded <?= $current_lang === 'es' ? 'bg-aclc-fuego text-white font-bold' : 'text-white/70 hover:text-white'; ?>" data-lang="es">ES</button>
+				<button type="button" class="<?= $current_lang === 'en' ? 'on' : ''; ?>" data-lang="en">EN</button>
+				<button type="button" class="<?= $current_lang === 'es' ? 'on' : ''; ?>" data-lang="es">ES</button>
 			</div>
 
-			<a class="btn btn-primary hidden sm:inline-flex items-center justify-center px-4 py-2 bg-aclc-fuego text-white text-xs font-semibold rounded-lg hover:opacity-95 transition-transform hover:-translate-y-0.5" href="<?= esc_url(home_url('/#register')); ?>">
+			<a class="btn btn-primary btn-sm" href="<?= esc_url(home_url('/#register')); ?>">
 				Register for information
 			</a>
 
-			<!-- Mobile Burger -->
-			<button id="siteBurger" class="md:hidden flex flex-col justify-center gap-1.5 p-2 text-white focus:outline-none" aria-label="Toggle menu">
-				<span class="w-5 h-0.5 bg-white rounded-full"></span>
-				<span class="w-5 h-0.5 bg-white rounded-full"></span>
-				<span class="w-5 h-0.5 bg-white rounded-full"></span>
+			<button class="burger" id="burgerToggle" aria-label="Menu">
+				<i></i><i></i><i></i>
 			</button>
 		</div>
-
-	</div>
-
-	<!-- Mobile Menu Dropdown -->
-	<div id="mobileMenu" class="md:hidden bg-aclc-kn border-t border-white/10 px-6 py-4 space-y-3" hidden>
-		<a href="<?= esc_url(home_url('/#programs')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">Programs</a>
-		<a href="<?= esc_url(home_url('/#calendar')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">Upcoming courses</a>
-		<a href="<?= esc_url(home_url('/#coaching')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">1-on-1 Coaching</a>
-		<a href="<?= esc_url(home_url('/#clients')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">Clients</a>
-		<a href="<?= esc_url(home_url('/#coaches')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">Coaches</a>
-		<a href="<?= esc_url(home_url('/#reading')); ?>" class="block text-white/90 hover:text-white py-1 text-sm font-medium">Reading</a>
-		<a href="<?= esc_url(home_url('/#register')); ?>" class="block text-center py-2.5 bg-aclc-fuego text-white text-xs font-semibold rounded-lg mt-3">Register for information</a>
 	</div>
 </header>
 <main id="main-content">

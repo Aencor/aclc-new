@@ -4,7 +4,7 @@
  *
  * @var array $block
  */
-$block_attrs = cbm_block_attributes($block, 'block-programs-ladder py-16 bg-white');
+$block_attrs = cbm_block_attributes($block);
 
 if (!empty($block['data']['is_preview'])) {
 	$preview = $block['data']['preview_image'] ?? null;
@@ -51,61 +51,60 @@ $programs_list = get_field('programs_list') ?: [
 ?>
 
 <section <?= $block_attrs; ?>>
-	<div class="wrap mx-auto max-w-[1160px] px-6">
-		<div class="mb-10">
+	<div class="hero tint">
+		<div class="wrap">
 			<?php if ($kicker): ?>
-				<div class="kicker font-mono text-xs uppercase tracking-widest text-aclc-fuego mb-2"><?= esc_html($kicker); ?></div>
+				<div class="kicker"><?= esc_html($kicker); ?></div>
 			<?php endif; ?>
-			<h2 class="font-display font-semibold text-3xl sm:text-4xl text-aclc-ink mb-3"><?= esc_html($headline); ?></h2>
+			<h1 class="mt16"><?= esc_html($headline); ?></h1>
 			<?php if ($lede): ?>
-				<p class="lede text-base text-[#4A5764] max-w-2xl font-body"><?= esc_html($lede); ?></p>
+				<p class="lede mt16" style="max-width:62ch"><?= esc_html($lede); ?></p>
 			<?php endif; ?>
 		</div>
+	</div>
 
-		<?php if ($subhead): ?>
-			<div class="font-mono text-xs uppercase text-[#5A6875] tracking-wider mb-4"><?= esc_html($subhead); ?></div>
-		<?php endif; ?>
+	<div class="block">
+		<div class="wrap">
+			<?php if ($subhead): ?>
+				<div class="tiny mb16"><?= esc_html($subhead); ?></div>
+			<?php endif; ?>
 
-		<!-- Rows Box -->
-		<div class="border border-aclc-line rounded-[10px] divide-y divide-aclc-line bg-white shadow-sm overflow-hidden mb-10">
-			<?php foreach ($programs_list as $prog): 
-				$z = (int) ($prog['active_zone'] ?? 2);
-				$is_pending = !empty($prog['price_pending']);
-				$price = $prog['price'] ?? '';
-				$btn_t = $prog['btn_text'] ?: 'View';
-				$btn_u = $prog['btn_url'] ?: '#register';
-			?>
-				<div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/70 transition-colors">
-					<!-- Zones indicator -->
-					<div class="w-[70px] flex-none">
-						<div class="zones flex gap-[3px] h-[6px] rounded-[3px] overflow-hidden">
-							<i class="flex-1 block <?= $z >= 1 ? 'bg-aclc-red' : 'bg-aclc-red/20'; ?>"></i>
-							<i class="flex-1 block <?= $z >= 2 ? 'bg-aclc-amber' : 'bg-aclc-amber/20'; ?>"></i>
-							<i class="flex-1 block <?= $z >= 3 ? 'bg-aclc-green' : 'bg-aclc-green/20'; ?>"></i>
-							<i class="flex-1 block <?= $z >= 4 ? 'bg-aclc-gold' : 'bg-aclc-gold/20'; ?>"></i>
+			<div class="rowbox mb32">
+				<?php foreach ($programs_list as $prog): 
+					$z = (int) ($prog['active_zone'] ?? 2);
+					$is_pending = !empty($prog['price_pending']);
+					$price = $prog['price'] ?? '';
+					$btn_t = $prog['btn_text'] ?: 'View';
+					$btn_u = $prog['btn_url'] ?: '#register';
+					$is_primary = (strpos($btn_u, '#program') !== false || $btn_t === 'View');
+				?>
+					<div class="row">
+						<div style="width:70px;flex:none">
+							<div class="zones dim">
+								<i class="z1 <?= $z >= 1 ? 'on' : ''; ?>"></i>
+								<i class="z2 <?= $z >= 2 ? 'on' : ''; ?>"></i>
+								<i class="z3 <?= $z >= 3 ? 'on' : ''; ?>"></i>
+								<i class="z4 <?= $z >= 4 ? 'on' : ''; ?>"></i>
+							</div>
 						</div>
-					</div>
 
-					<!-- Details -->
-					<div class="flex-grow">
-						<div class="font-semibold text-base text-aclc-ink"><?= esc_html($prog['title'] ?? ''); ?></div>
-						<div class="text-xs text-[#5A6875] mt-0.5"><?= esc_html($prog['duration'] ?? ''); ?></div>
-					</div>
+						<div class="grow" style="flex:1">
+							<div style="font-weight:600"><?= esc_html($prog['title'] ?? ''); ?></div>
+							<div class="xs"><?= esc_html($prog['duration'] ?? ''); ?></div>
+						</div>
 
-					<!-- Price & CTA -->
-					<div class="flex items-center gap-4 self-end md:self-auto">
 						<?php if ($is_pending || empty($price)): ?>
-							<span class="font-mono text-xs text-aclc-fuego border border-dashed border-aclc-fuego/40 bg-aclc-fuego/5 px-2.5 py-1 rounded">price TBD</span>
+							<span class="pending">price TBD</span>
 						<?php else: ?>
-							<span class="font-mono font-bold text-base text-aclc-ink"><?= esc_html($price); ?></span>
+							<span class="price" style="font-size:16px"><?= esc_html($price); ?></span>
 						<?php endif; ?>
 
-						<a href="<?= esc_url($btn_u); ?>" class="btn <?= strpos($btn_u, '#program') !== false ? 'bg-aclc-fuego text-white' : 'border border-aclc-line bg-white text-aclc-ink hover:border-aclc-navy'; ?> px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors">
+						<a class="btn <?= $is_primary ? 'btn-primary' : 'btn-ghost'; ?> btn-sm" href="<?= esc_url($btn_u); ?>">
 							<?= esc_html($btn_t); ?>
 						</a>
 					</div>
-				</div>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	</div>
 </section>

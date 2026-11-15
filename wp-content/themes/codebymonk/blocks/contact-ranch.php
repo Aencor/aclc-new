@@ -78,3 +78,4 @@ $photo_url    = !empty($ranch_photo['url']) ? $ranch_photo['url'] : get_template
 		</div>
 	</div>
 </section>
+

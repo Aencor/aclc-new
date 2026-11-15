@@ -14,12 +14,15 @@ function theme_scripts() {
 		"all"
 	);
 
+	$css_ver = file_exists(get_template_directory() . "/assets/build/style.css") ? filemtime(get_template_directory() . "/assets/build/style.css") : "1.2";
+	$js_ver  = file_exists(get_template_directory() . "/assets/build/main.js") ? filemtime(get_template_directory() . "/assets/build/main.js") : "1.2";
+
 	// Main Style
 	wp_enqueue_style(
 		"master",
 		get_template_directory_uri() . "/assets/build/style.css",
 		['font-awesome'],
-		"1.1",
+		$css_ver,
 		"all"
 	);
 
@@ -28,7 +31,7 @@ function theme_scripts() {
 		"theme-defer",
 		get_template_directory_uri() . "/assets/build/main.js",
 		['jquery'],
-		'1.0.1',
+		$js_ver,
 		true // Cargar en el footer
 	);
 	wp_enqueue_script("theme-defer");
