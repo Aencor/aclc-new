@@ -1,6 +1,6 @@
 # Reglas de Desarrollo del Proyecto (WordPress / Codebymonk)
 
-Este proyecto utiliza el tema base personalizado **codebymonk** con Docker, ACF Pro (Advanced Custom Fields), Tailwind CSS, GSAP y Laravel Mix. Todo desarrollo futuro debe adherirse estrictamente a las siguientes 12 reglas:
+Este proyecto utiliza el tema base personalizado **codebymonk** con Docker, ACF Pro (Advanced Custom Fields), Tailwind CSS, GSAP y Laravel Mix. Todo desarrollo futuro debe adherirse estrictamente a las siguientes 13 reglas:
 
 ---
 
@@ -12,6 +12,7 @@ Este proyecto utiliza el tema base personalizado **codebymonk** con Docker, ACF 
 
 ### 2. Estructura de Bloques ACF y `acf-json`
 - Cada componente visual se implementa como un **bloque Gutenberg de ACF** en la carpeta `wp-content/themes/codebymonk/blocks/`.
+- **Estructura de Acordeón en ACF**: Al crear o definir los campos de cualquier bloque ACF, se debe incluir siempre un campo tipo **Accordion** al inicio con el nombre del bloque para que sea fácil de gestionar y colapsar en el backend de WordPress.
 - La configuración de campos de ACF debe guardarse y versionarse siempre en formato JSON dentro de `wp-content/themes/codebymonk/acf-json/`.
 - Nunca dejar campos desincronizados; asegurar la sincronización automática de ACF JSON.
 
@@ -91,6 +92,18 @@ Este proyecto utiliza el tema base personalizado **codebymonk** con Docker, ACF 
 - **Push Manual Exclusivo**:
   - **NUNCA hacer `git push` de forma automática.**
   - Mantener los commits únicamente en local hasta que el usuario solicite explícitamente enviarlos al repositorio remoto.
+
+---
+
+### 13. Estructura Organizada de Imágenes (`assets/img/`)
+- Toda imagen estática del tema debe organizarse obligatoriamente en subcarpetas semánticas dentro de `wp-content/themes/codebymonk/assets/img/`:
+  - `logos/`: Logos, isotipos, marcas de agua y favicons.
+  - `photos/`: Fotografías de personas, coaches, testimonios y clientes.
+  - `backgrounds/`: Fondos, paisajes, texturas, banners e imágenes de ambientación (ej. Letoli Ranch).
+  - `blocks/`: Capturas y vistas previas de bloques ACF para el selector de Gutenberg (Regla 7).
+  - `icons/`: Iconos SVG o rasterizados de interfaz.
+- Nunca colocar imágenes sueltas en la raíz de `assets/img/`.
+
 
 
 

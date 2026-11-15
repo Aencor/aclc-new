@@ -1,0 +1,6 @@
+.block-legal {
+  .legal-section + .legal-section {
+    border-top: 1px solid var(--color-aclc-line, #E1E7ED);
+    padding-top: 2rem;
+  }
+}

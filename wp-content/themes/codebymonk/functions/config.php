@@ -15,3 +15,9 @@ function monk_mime_types($mimes) {
 	return $mimes;
 }
 add_filter("upload_mimes", "monk_mime_types");
+
+// ACF PRO License Key
+if (function_exists('acf_pro_update_license')) {
+	acf_pro_update_license('b3JkZXJfaWQ9ODA5OTl8dHlwZT1kZXZlbG9wZXJ8ZGF0ZT0yMDE2LTA1LTA1IDE3OjE1OjE0');
+}
+

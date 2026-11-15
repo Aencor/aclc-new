@@ -2,11 +2,12 @@ version: "3.9"
 
 services:
   database:
+    container_name: aclc-db
     mem_limit: 2048m
-    image: mariadb
+    image: mariadb:10.11
     restart: unless-stopped
     ports:
-      - 3306:3306
+      - "3307:3306"
     env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -19,12 +20,13 @@ services:
       - wordpress-network
 
   phpmyadmin:
+    container_name: aclc-phpmyadmin
     depends_on:
       - database
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
     ports:
-      - 8081:80
+      - "8085:80"
     environment:
       PMA_HOST: database
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -32,22 +34,35 @@ services:
       - wordpress-network
 
   wordpress:
+    container_name: aclc-wp
     depends_on:
       - database
-    image: wordpress
+    image: wordpress:latest
     restart: unless-stopped
     ports:
-      - 8080:80
+      - "8082:80"
     environment:
       WORDPRESS_DB_HOST: database:3306
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_MEMORY_LIMIT', '512M');
+        define('WP_MAX_MEMORY_LIMIT', '512M');
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+            $$_SERVER['HTTPS'] = 'on';
+        }
+        if (isset($$_SERVER['HTTP_HOST'])) {
+            $$scheme = (isset($$_SERVER['HTTPS']) && $$_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+            define('WP_HOME', $$scheme . '://' . $$_SERVER['HTTP_HOST']);
+            define('WP_SITEURL', $$scheme . '://' . $$_SERVER['HTTP_HOST']);
+        }
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - wordpress-network
+      - local-proxy
 
 volumes:
   db-data:
@@ -55,3 +70,6 @@ volumes:
 networks:
   wordpress-network:
     driver: bridge
+  local-proxy:
+    name: local-proxy
+    external: true

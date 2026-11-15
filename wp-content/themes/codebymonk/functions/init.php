@@ -44,3 +44,8 @@ spl_autoload_register(function ($class) {
 	}
 });
 
+// Inicializar CPTs y Taxonomías de ACLC (POO)
+\Monk\PostTypes::init();
+\Monk\Taxonomies::init();
+
+
