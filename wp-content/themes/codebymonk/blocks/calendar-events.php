@@ -21,7 +21,7 @@ $lede      = get_field('lede') ?: 'Live online and in-person immersions at Letol
 $cta_title = get_field('cta_title') ?: 'Nothing that fits your dates?';
 $cta_text  = get_field('cta_text') ?: 'Register and we send you new dates as soon as they are confirmed.';
 $cta_btn   = get_field('cta_btn_text') ?: 'Register for information';
-$cta_url   = get_field('cta_btn_url') ?: '#register';
+$cta_url   = get_field('cta_btn_url') ?: home_url('/register/');
 
 $events_query = new WP_Query([
 	'post_type'      => 'aclc_event',

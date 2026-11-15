@@ -17,7 +17,7 @@ if (!empty($block['data']['is_preview'])) {
 $kicker    = get_field('kicker') ?: 'THE TEAM';
 $headline  = get_field('headline') ?: 'Who you will be working with';
 $view_text = get_field('view_all_text') ?: 'Meet all coaches →';
-$view_url  = get_field('view_all_url') ?: '#coaches';
+$view_url  = get_field('view_all_url') ?: home_url('/coaches/');
 
 $selected_coaches = get_field('coaches_selection');
 if (empty($selected_coaches)) {

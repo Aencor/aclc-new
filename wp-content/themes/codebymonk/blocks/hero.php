@@ -18,7 +18,7 @@ $kicker           = get_field('kicker') ?: 'Since 2001 · Letoli Ranch, Texas';
 $headline         = get_field('headline') ?: 'TRANSFORM YOURSELF<br>and change the world.';
 $lede             = get_field('lede') ?: 'Whole-person coaching — body, mind and spirit — built on the methodology of Alan C. Walter. With an assigned coach, until you live consistently in the Green Zone.';
 $btn_text         = get_field('btn_text') ?: 'Register for more information';
-$btn_url          = get_field('btn_url') ?: '#register';
+$btn_url          = get_field('btn_url') ?: home_url('/register/');
 $btn_note         = get_field('btn_note') ?: 'Free · no call required';
 $video_label      = get_field('video_label') ?: 'Watch: what actually happens here';
 $video_sublabel   = get_field('video_sublabel') ?: '90 seconds · with Ceil Stanford';
@@ -28,7 +28,7 @@ $poster_url       = !empty($poster_image['url']) ? $poster_image['url'] : get_te
 
 $sidebar_title    = get_field('sidebar_title') ?: 'Live programmes with dates';
 $sidebar_btn_text = get_field('sidebar_btn_text') ?: 'See all programmes';
-$sidebar_btn_url  = get_field('sidebar_btn_url') ?: '#programs';
+$sidebar_btn_url  = get_field('sidebar_btn_url') ?: home_url('/programs/');
 $live_items       = get_field('sidebar_live_items') ?: [
 	['title' => 'Redefine Your Self-Worth', 'dates' => 'July · September · November 2026'],
 	['title' => 'Vital Fundamentals', 'dates' => '19–26 Sep · 5–12 Dec 2026'],

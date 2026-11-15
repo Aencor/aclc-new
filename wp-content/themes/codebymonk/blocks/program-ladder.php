@@ -27,7 +27,7 @@ $programs_list = get_field('programs_list') ?: [
 		'price'         => '',
 		'price_pending' => true,
 		'btn_text'      => 'Get information',
-		'btn_url'       => '#register',
+		'btn_url'       => home_url('/register/'),
 	],
 	[
 		'active_zone'   => 3,
@@ -36,7 +36,7 @@ $programs_list = get_field('programs_list') ?: [
 		'price'         => '$3,997',
 		'price_pending' => false,
 		'btn_text'      => 'View',
-		'btn_url'       => '#program',
+		'btn_url'       => home_url('/vital-fundamentals/'),
 	],
 	[
 		'active_zone'   => 3,
@@ -45,7 +45,7 @@ $programs_list = get_field('programs_list') ?: [
 		'price'         => '',
 		'price_pending' => true,
 		'btn_text'      => 'Get information',
-		'btn_url'       => '#register',
+		'btn_url'       => home_url('/register/'),
 	],
 ];
 ?>
@@ -75,8 +75,8 @@ $programs_list = get_field('programs_list') ?: [
 					$is_pending = !empty($prog['price_pending']);
 					$price = $prog['price'] ?? '';
 					$btn_t = $prog['btn_text'] ?: 'View';
-					$btn_u = $prog['btn_url'] ?: '#register';
-					$is_primary = (strpos($btn_u, '#program') !== false || $btn_t === 'View');
+					$btn_u = $prog['btn_url'] ?: home_url('/register/');
+					$is_primary = (strpos($btn_u, 'vital-fundamentals') !== false || $btn_t === 'View');
 				?>
 					<div class="row">
 						<div style="width:70px;flex:none">
@@ -104,6 +104,30 @@ $programs_list = get_field('programs_list') ?: [
 						</a>
 					</div>
 				<?php endforeach; ?>
+			</div>
+
+			<div class="g2">
+				<div>
+					<div class="tiny mb16">Self-paced</div>
+					<div class="card mb16">
+						<h4>Building Your Inner Wealth</h4>
+						<p class="sm mt8">Start whenever you like. On-demand modules.</p>
+						<span class="pending mt16">price TBD</span>
+					</div>
+					<div class="card">
+						<h4>The Prosperity Course</h4>
+						<p class="sm mt8">Start whenever you like. On-demand modules.</p>
+						<span class="pending mt16">price TBD</span>
+					</div>
+				</div>
+				<div>
+					<div class="tiny mb16">Diagnostic first</div>
+					<div class="card" style="background:#F2FAF5;border-color:#D6EDE0">
+						<h4 style="color:var(--shgreen)">Zones Profiles</h4>
+						<p class="sm mt8">Financial, Life &amp; Skills and Body. The assessment lives on zonesoflife.com and tells you where to begin.</p>
+						<a class="btn btn-go btn-sm mt16" href="<?= esc_url(home_url('/profiles/')); ?>">Go to the assessment</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

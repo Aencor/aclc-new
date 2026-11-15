@@ -53,7 +53,7 @@ $price      = get_field('price') ?: '$3,997';
 $price_note = get_field('price_note') ?: 'Includes lodging & meals at Letoli Ranch';
 $guarantee  = get_field('guarantee') ?: 'Full refund guarantee if after day 2 you don\'t feel a permanent shift in clarity and power.';
 $btn_text   = get_field('btn_text') ?: 'Register for details';
-$btn_url    = get_field('btn_url') ?: '#register';
+$btn_url    = get_field('btn_url') ?: home_url('/register/');
 
 $inclusions = get_field('inclusions') ?: [
 	['item' => '8 days of private room & board at Letoli Ranch'],

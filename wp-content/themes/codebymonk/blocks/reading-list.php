@@ -57,7 +57,7 @@ $books = get_field('books') ?: [
 		'title'       => 'The Fire Within',
 		'description' => 'The foundational text on the Zones of Life and how human beings recover their innate power.',
 		'price'       => '$24.95',
-		'link'        => '#book',
+		'link'        => home_url('/the-fire-within/'),
 	],
 ];
 ?>

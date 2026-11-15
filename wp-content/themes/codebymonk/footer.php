@@ -15,17 +15,29 @@
    <div class="tiny mt16" style="color:rgba(255,255,255,.42)">Dashed = account not yet confirmed</div>
   </div>
   <div><h4>Programmes</h4>
-   <a href="<?= esc_url(home_url('/#calendar')); ?>">Upcoming courses</a><a href="<?= esc_url(home_url('/#program')); ?>">Vital Fundamentals</a>
-   <a href="<?= esc_url(home_url('/#programs')); ?>">Life Enhancement Course</a><a href="<?= esc_url(home_url('/#programs')); ?>">Self-paced courses</a></div>
+   <a href="<?= esc_url(home_url('/calendar/')); ?>">Upcoming courses</a>
+   <a href="<?= esc_url(home_url('/vital-fundamentals/')); ?>">Vital Fundamentals</a>
+   <a href="<?= esc_url(home_url('/programs/')); ?>">Life Enhancement Course</a>
+   <a href="<?= esc_url(home_url('/programs/')); ?>">Self-paced courses</a>
+  </div>
   <div><h4>Coaching</h4>
-   <a href="<?= esc_url(home_url('/#coaching')); ?>">1-on-1 Coaching</a><a href="<?= esc_url(home_url('/#coaching')); ?>">World Class Coach path</a>
-   <a href="<?= esc_url(home_url('/#register')); ?>">Register for information</a></div>
+   <a href="<?= esc_url(home_url('/coaching/')); ?>">1-on-1 Coaching</a>
+   <a href="<?= esc_url(home_url('/coaching/')); ?>">World Class Coach path</a>
+   <a href="<?= esc_url(home_url('/register/')); ?>">Register for information</a>
+  </div>
   <div><h4>Learn</h4>
-   <a href="<?= esc_url(home_url('/#clients')); ?>">What our clients say</a><a href="<?= esc_url(home_url('/#reading')); ?>">Recommended reading</a><a href="<?= esc_url(home_url('/#book')); ?>">The Fire Within</a>
-   <a href="<?= esc_url(home_url('/#profiles')); ?>">Zones Profiles</a><a href="<?= esc_url(home_url('/#coaches')); ?>">Our coaches</a></div>
+   <a href="<?= esc_url(home_url('/clients/')); ?>">What our clients say</a>
+   <a href="<?= esc_url(home_url('/reading/')); ?>">Recommended reading</a>
+   <a href="<?= esc_url(home_url('/the-fire-within/')); ?>">The Fire Within</a>
+   <a href="<?= esc_url(home_url('/profiles/')); ?>">Zones Profiles</a>
+   <a href="<?= esc_url(home_url('/coaches/')); ?>">Our coaches</a>
+  </div>
   <div><h4>Company</h4>
-   <a href="<?= esc_url(home_url('/#contact')); ?>">Contact</a><a href="<?= esc_url(home_url('/#privacy')); ?>">Privacy policy</a>
-   <a href="<?= esc_url(home_url('/#cookies')); ?>">Cookie policy</a><a href="<?= esc_url(home_url('/#privacy')); ?>">Terms of service</a></div>
+   <a href="<?= esc_url(home_url('/contact/')); ?>">Contact</a>
+   <a href="<?= esc_url(home_url('/privacy-policy/')); ?>">Privacy policy</a>
+   <a href="<?= esc_url(home_url('/cookie-policy/')); ?>">Cookie policy</a>
+   <a href="<?= esc_url(home_url('/privacy-policy/')); ?>">Terms of service</a>
+  </div>
  </div>
  <div class="legal"><span>© <?= date('Y'); ?> Advanced Coaching &amp; Leadership Center, Inc.</span>
   <span>1400 Camp Letoli Road, Saint Jo, Texas 76265 · <span class="mono">+1 940-995-3187</span></span></div>

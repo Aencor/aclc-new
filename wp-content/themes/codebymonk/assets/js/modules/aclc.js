@@ -333,5 +333,13 @@ export default {
         bar.hidden = true;
       };
     }
+
+    const re = q('#reopenCookies');
+    if (re) {
+      re.onclick = () => {
+        bar.hidden = false;
+        bar.scrollIntoView({ behavior: 'smooth' });
+      };
+    }
   },
 };

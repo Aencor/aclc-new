@@ -105,7 +105,7 @@ $success_title  = get_field('success_title') ?: 'Check your inbox';
 								</label>
 								<label class="check sm">
 									<input type="checkbox" id="rOk" required>
-									<span>I agree to the <a href="#privacy" style="text-decoration:underline">Privacy policy</a>. We do not share your details with third parties.</span>
+									<span>I agree to the <a href="<?= esc_url(home_url('/privacy-policy/')); ?>" style="text-decoration:underline">Privacy policy</a>. We do not share your details with third parties.</span>
 								</label>
 							</div>
 
@@ -127,7 +127,7 @@ $success_title  = get_field('success_title') ?: 'Check your inbox';
 					<div class="card pad-lg">
 						<h4>Want to know where to start first?</h4>
 						<p class="sm mt8">Take the two-minute Zones Profile. It shows you which Zone you are operating in right now and points to the programme that fits.</p>
-						<a class="btn btn-go mt16" href="#profiles">Take the free profile</a>
+						<a class="btn btn-go mt16" href="<?= esc_url(home_url('/profiles/')); ?>">Take the free profile</a>
 					</div>
 				</div>
 			</div>

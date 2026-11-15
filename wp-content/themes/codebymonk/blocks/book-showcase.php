@@ -21,7 +21,7 @@ $lede    = get_field('lede') ?: 'The breakthrough work that introduces the Zones
 
 $links = get_field('links') ?: [
 	['label' => 'Buy on Knowledgism Bookstore', 'url' => 'https://knowledgism.com/bookstore'],
-	['label' => 'Register for the Study Course', 'url' => '#register'],
+	['label' => 'Register for the Study Course', 'url' => home_url('/register/')],
 ];
 
 $insights = get_field('insights') ?: [

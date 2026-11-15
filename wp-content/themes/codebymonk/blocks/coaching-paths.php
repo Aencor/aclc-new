@@ -39,7 +39,7 @@ $paths = get_field('paths') ?: [
 $cta_title    = get_field('cta_title') ?: 'Start by getting the details';
 $cta_text     = get_field('cta_text') ?: 'Register and we send you coach bios, session structures and pricing.';
 $cta_btn_text = get_field('cta_btn_text') ?: 'Register for information';
-$cta_btn_url  = get_field('cta_btn_url') ?: '#register';
+$cta_btn_url  = get_field('cta_btn_url') ?: home_url('/register/');
 ?>
 
 <section <?= $block_attrs; ?>>

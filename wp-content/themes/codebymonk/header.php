@@ -43,17 +43,17 @@
 
 <header class="site">
 	<div class="wrap bar">
-		<a href="<?= esc_url(home_url('/#home')); ?>" class="hgroup">
+		<a href="<?= esc_url(home_url('/')); ?>" class="hgroup">
 			<img class="logo" alt="Advanced Coaching & Leadership Center" src="<?= esc_url(get_template_directory_uri()); ?>/assets/img/logos/logo.png">
 		</a>
 
 		<nav class="main">
-			<a href="<?= esc_url(home_url('/#programs')); ?>">Programs</a>
-			<a href="<?= esc_url(home_url('/#calendar')); ?>">Upcoming courses</a>
-			<a href="<?= esc_url(home_url('/#coaching')); ?>">1-on-1 Coaching</a>
-			<a href="<?= esc_url(home_url('/#clients')); ?>">Clients</a>
-			<a href="<?= esc_url(home_url('/#coaches')); ?>">Coaches</a>
-			<a href="<?= esc_url(home_url('/#reading')); ?>">Reading</a>
+			<a href="<?= esc_url(home_url('/programs/')); ?>" class="<?= is_page('programs') ? 'on' : ''; ?>">Programs</a>
+			<a href="<?= esc_url(home_url('/calendar/')); ?>" class="<?= is_page('calendar') ? 'on' : ''; ?>">Upcoming courses</a>
+			<a href="<?= esc_url(home_url('/coaching/')); ?>" class="<?= is_page('coaching') ? 'on' : ''; ?>">1-on-1 Coaching</a>
+			<a href="<?= esc_url(home_url('/clients/')); ?>" class="<?= is_page('clients') ? 'on' : ''; ?>">Clients</a>
+			<a href="<?= esc_url(home_url('/coaches/')); ?>" class="<?= is_page('coaches') ? 'on' : ''; ?>">Coaches</a>
+			<a href="<?= esc_url(home_url('/reading/')); ?>" class="<?= is_page('reading') ? 'on' : ''; ?>">Reading</a>
 		</nav>
 
 		<div class="hgroup">
@@ -65,7 +65,7 @@
 				<button type="button" class="<?= $current_lang === 'es' ? 'on' : ''; ?>" data-lang="es">ES</button>
 			</div>
 
-			<a class="btn btn-primary btn-sm" href="<?= esc_url(home_url('/#register')); ?>">
+			<a class="btn btn-primary btn-sm" href="<?= esc_url(home_url('/register/')); ?>">
 				Register for information
 			</a>
 

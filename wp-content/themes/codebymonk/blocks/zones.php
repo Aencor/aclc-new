@@ -36,7 +36,7 @@ $cards       = get_field('zone_cards') ?: [
 $teaser_title    = get_field('teaser_title') ?: 'Not sure which Zone you are in?';
 $teaser_text     = get_field('teaser_text') ?: 'The free profile takes two minutes and tells you which programme fits.';
 $teaser_btn_text = get_field('teaser_btn_text') ?: 'Take the free profile';
-$teaser_btn_url  = get_field('teaser_btn_url') ?: '#profiles';
+$teaser_btn_url  = get_field('teaser_btn_url') ?: home_url('/profiles/');
 ?>
 
 <section <?= $block_attrs; ?>>
